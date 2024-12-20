@@ -1,0 +1,8 @@
+{
+  "type": "postgres",
+  "url": "postgres://postgres:1111@localhost:5432/travelus",
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "migrations": ["dist/migrations/*{.ts,.js}"],
+  "synchronize": false,
+  "logging": true
+}

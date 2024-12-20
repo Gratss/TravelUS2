@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #chat {
+            margin-top: 20px;
+        }
+        #messages {
+            list-style: none;
+            padding: 0;
+        }
+        #messages li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat App</h1>
+    <div>
+        <label for="username">Enter your username:</label>
+        <input type="text" id="username" />
+        <button onclick="setUsername()">Set Username</button>
+    </div>
+
+    <div id="chat" style="display:none;">
+        <div>
+            <label for="message">Message:</label>
+            <input type="text" id="message" />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <h2>Users:</h2>
+        <ul id="userList"></ul>
+
+        <h2>Messages:</h2>
+        <ul id="messages"></ul>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        function setUsername() {
+            const username = document.getElementById('username').value;
+            if (username) {
+                socket.emit('setUsername', username);
+                document.getElementById('chat').style.display = 'block';
+                document.getElementById('username').disabled = true;
+            }
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            if (message) {
+                socket.emit('chatMessage', message);
+                document.getElementById('message').value = '';
+            }
+        }
+
+        // Получение списка пользователей
+        socket.on('userList', (users) => {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+            users.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = user;
+                userList.appendChild(li);
+            });
+        });
+
+        // Получение сообщения
+        socket.on('chatMessage', (data) => {
+            const messages = document.getElementById('messages');
+            const li = document.createElement('li');
+            li.textContent = `${data.user}: ${data.message}`;
+            messages.appendChild(li);
+        });
+    </script>
+</body>
+</html>

@@ -17,19 +17,11 @@ export class UserService {
     name: string,
     email: string,
     password: string,
+    phone: string,
   ): Promise<User> {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = randomBytes(32).toString('hex');
-    const user = this.userRepository.create({
-      username: name,
-      email,
-      password: hashedPassword,
-      emailVerificationToken: verificationToken,
-    });
-    const savedUser = await this.userRepository.save(user);
-
-    await this.sendVerificationEmail(email, verificationToken);
-    return savedUser;
+    const user = this.userRepository.create({ name, email, password: hashedPassword, phone });
+    return this.userRepository.save(user);
   }
 
   async verifyEmail(token: string): Promise<void> {

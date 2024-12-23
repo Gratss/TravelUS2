@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   // Регистрация пользователя
-  async register(username: string, password: string, email: string): Promise<User> {
-    return await this.userService.createUser(username, email, password);
+  async register(username: string, password: string, email: string, phone: string): Promise<User> {
+    return await this.userService.createUser(username, email, password, phone);
   }
 }

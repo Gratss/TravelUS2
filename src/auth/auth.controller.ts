@@ -12,10 +12,10 @@ export class AuthController {
   // Регистрация пользователя
   @Post('register')
   async register(
-    @Body() body: { username: string; password: string; email: string },
+    @Body() body: { username: string; password: string; email: string; phone: string },
   ) {
-    const { username, password, email } = body;
-    return await this.authService.register(username, password, email);
+    const { username, password, email, phone } = body;
+    return await this.authService.register(username, password, email, phone);
   }
 
   // Логин пользователя

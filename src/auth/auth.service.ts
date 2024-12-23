@@ -30,9 +30,9 @@ export class AuthService {
   }
 
   // Регистрация
-  async register(username: string, password: string, email: string) {
+  async register(username: string, password: string, email: string, phone: string) {
     const hashedPassword = await bcrypt.hash(password, 10);
-    return this.usersService.createUser(username, email, hashedPassword);
+    return this.usersService.createUser(username, email, hashedPassword, phone);
   }
 
   // Генерация refresh token

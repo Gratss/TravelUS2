@@ -8,8 +8,9 @@ export class UserController {
 
 
   @Post()
-  async createUser(@Body() userData: { name: string; email: string; password: string }) {
-    return await this.userService.createUser(userData.name, userData.email, userData.password);
+  async createUser(@Body() userData: { name: string; email: string; password: string; phone: string }) {
+    const { name, email, password, phone } = userData;
+    return await this.userService.createUser(name, email, password, phone);
   }
 
 

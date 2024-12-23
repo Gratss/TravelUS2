@@ -45,6 +45,15 @@ export class User {
   @Column({ nullable: true })
   emailVerificationToken: string; // Токен для подтверждения email
 
+  @Column({ nullable: true })
+  phone: string; // Добавляем поле для номера телефона
+
+  @Column({ nullable: true })
+  name: string;
+
+  @Column({ nullable: true })
+  name: string;
+
   @OneToMany(() => Trip, (trip) => trip.user)
   trips: Trip[];
 
